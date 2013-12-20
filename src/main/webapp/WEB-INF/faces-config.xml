@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+    <application>
+        <el-resolver>
+            org.springframework.web.jsf.el.SpringBeanFacesELResolver
+        </el-resolver>
+    </application>
+
+    <!-- Nav Rules -->
+    
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>base</from-outcome>
+            <to-view-id>/base.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
+    <navigation-rule>
+        <from-view-id>/cart.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>cart</from-outcome>
+            <to-view-id>/cart.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/cart.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>checkout</from-outcome>
+            <to-view-id>/checkout.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/checkout.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>accepted</from-outcome>
+            <to-view-id>/accepted.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/menuadmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuadmin</from-outcome>
+            <to-view-id>/menuadmin.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/kitchen.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>kitchen</from-outcome>
+            <to-view-id>/kitchen.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/reports.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>reports</from-outcome>
+            <to-view-id>/reports.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/secure.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>secure</from-outcome>
+            <to-view-id>/secure.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <!-- Listeners -->
+    <!--
+    <lifecycle>
+        <phase-listener>ua.erest.services.AccessControlPhaseListener</phase-listener>
+    </lifecycle>
+    -->
+    <lifecycle>
+        <phase-listener id="nocache">ua.foodstore.services.CacheControlPhaseListener</phase-listener>
+    </lifecycle>
+
+</faces-config>

@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <link rel="stylesheet" type="text/css" href="mainstyle.css"/>
+            <link rel="stylesheet" type="text/css" href="shopcartstyle.css"/>
+            <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"/>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Food store</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <div id="wrapper">
+                <div id="header">
+                    <div id="topmenu">
+                        <ul>
+                            <ui:repeat value="#{mainMenu.mainmenu}" var="item">
+                                <li>
+                                    <a href="#{item.href}"><h:outputText value="#{item.name}" class="mainmenu"/></a>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </div>
+                </div><!-- #header-->
+
+                <div id="logolayer">
+
+                    <div id="logo">
+                        <p>
+                        <h:graphicImage alt="logo"
+                                        url="images/logo-img.png">
+                        </h:graphicImage>
+                        </p>
+                    </div>
+                    <div id="middletemplate">
+
+                        
+                        
+                        <div id="shoppingCart">
+                            
+                            <!-- Cart header -->
+                            
+                            <div class="cartitem_">
+                                    <h:form>
+                                        <div class="cartproductimage_">
+                                            
+                                        </div>
+                                        <div class="cartproductname_">
+                                            <h:outputText value="Product" > 
+                                                
+                                            </h:outputText>
+                                        </div>
+                                        <div class="cartproductqty_">
+                                            <h:outputText value="Q-ty" > 
+                                                
+                                            </h:outputText>
+                                        </div> 
+                                        <div class="cartproductprice_">
+                                            <h:outputText value="Price" > 
+                                                
+                                            </h:outputText>
+                                        </div>
+                                        <div class="cartproductsum_">
+                                            <h:outputText value="Sum" > 
+                                                
+                                            </h:outputText>
+                                        </div>
+                                        <div class="removebtn_">
+                                                                               
+                                        </div>
+                                    </h:form>
+                                </div>
+                            
+                            <ui:repeat value="#{ih.cart.items}" var="item">
+
+                                <div class="cartitem">
+                                    <h:form>
+                                        <div class="cartproductimage">
+                                            <h:graphicImage alt=""
+                                                            url="#{item.imagePath}"  width="116" height="87">
+                                            </h:graphicImage>
+                                        </div>
+                                        <div class="cartproductname">#{item.name}</div>
+                                        <div class="cartproductquantity">
+                                            <p:spinner value="#{item.quantity}" size="2" min="1" max="10" >
+                                                <p:ajax update=":carttotal:ordertotal, itemsum " />
+                                            </p:spinner>
+                                        </div> 
+                                        <div class="cartproductprice">$ #{item.price}</div>
+                                        <div class="cartproductsum">
+                                            <h:outputText id="itemsum" value="#{item.sum}" > 
+                                                <f:convertNumber  pattern="$0.00"/>
+                                            </h:outputText>
+                                        </div>
+                                        <div class="removebtn">
+                                            <p:commandButton action="#{ih.cart.remove(item)}" value="Remove" ajax="false"/>                                    
+                                        </div>
+                                    </h:form>
+                                </div>
+
+                            </ui:repeat> 
+                            <div id="totalcart">
+                                <h:form id="carttotal">
+                                    <h:outputText value="Total: "/>
+                                    <h:outputText id="ordertotal" value="#{ih.cart.total}" > 
+                                        <f:convertNumber  pattern="$0.00"/>
+                                    </h:outputText>
+                                </h:form>
+                            </div>
+                        </div>
+
+                        <h:form>
+                            <p:commandButton action="checkout?faces-redirect=true" value="Checkout" ajax="false"/>
+                        </h:form>
+                        
+                    </div>
+                </div>
+
+                <div id="middlecart">
+
+                </div>
+
+                <!-- #middle-->
+
+            </div><!-- #wrapper -->
+
+            <div id="footer">
+                <div id="footermenu">
+                    <ul>
+                        <ui:repeat value="#{mainMenu.mainmenu}" var="item">
+                            <li>
+                                <a href="#{item.href}"><h:outputText value="#{item.name}" class="mainmenu"/></a>
+                            </li>
+                        </ui:repeat>
+                    </ul>
+                </div>
+            </div><!-- #footer -->
+        </h:body>
+    </f:view>
+</html>
+

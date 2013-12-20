@@ -1,0 +1,20 @@
+Wed Sep 25 15:04:59 EEST 2013 : Сетевой сервер Apache Derby Network Server - 10.10.1.1 - (1458268) запущен и готов принимать соединения на порту 1527 на {3} 
+----------------------------------------------------------------
+Wed Sep 25 15:05:48 EEST 2013:
+ Производится загрузка Derby версии The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): экземпляр a816c00e-0141-5502-0a49-ffffc893f23a
+в каталоге базы данных C:\Users\Cold Warrioir\Dropbox\NetBeansProjects\ERestProject\src\main\resources\FoodStoreDB sun.misc.Launcher$AppClassLoader@26e431 
+
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_25-b17
+user.dir=C:\jdk1.7.0_25\db
+os.name=Windows 7
+os.arch=x86
+os.version=6.1
+derby.system.home=C:\Users\Cold Warrioir\Dropbox\NetBeansProjects\ERestProject\src\main\resources
+Запущен загрузчик классов базы данных - derby.database.classpath=''
+----------------------------------------------------------------
+Wed Sep 25 15:18:30 EEST 2013: Shutting down Derby engine
+----------------------------------------------------------------
+Wed Sep 25 15:18:30 EEST 2013:
+Завершается работа экземпляра a816c00e-0141-5502-0a49-ffffc893f23a
+----------------------------------------------------------------

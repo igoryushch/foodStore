@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <f:event type="preRenderView" listener="#{userHolder.checkLogin}"/>
+        <h:head>
+            <link rel="stylesheet" type="text/css" href="mainstyle.css"/>
+            <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"/>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Food store</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <div id="wrapper">
+                <div id="header">
+                    <div id="topmenu">
+                        <ul>
+                            <ui:repeat value="#{mainMenu.mainmenu}" var="item">
+                                <li>
+                                    <a href="#{item.href}"><h:outputText value="#{item.name}" class="mainmenu"/></a>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </div>
+                </div><!-- #header-->
+
+                <div id="logolayer">
+
+                    <div id="logo">
+                        <p>
+                        <h:graphicImage alt="logo"
+                                        url="images/logo-img.png">
+                        </h:graphicImage>
+                        </p>
+                    </div>
+
+                    <div id="middletemplate">
+
+                        <div id="userinfo"> 
+                            <h:form style="float: right;margin-bottom: 10px;padding-bottom: 10px">
+                                <h:graphicImage value="/images/blank-user.gif" width="20px" height="20px" style="margin-right: 5px;"/>
+                                <p:outputLabel value="#{userHolder.currentUser.dbUser.fullName}"/>
+                                <p:spacer width="20"/>
+                                <p:commandButton value="Logout" action="login?faces-redirect=true" style="border-radius: 20px 20px 20px 20px; height: 30px" ajax="false">
+                                    <f:actionListener type="ua.foodstore.managedbeans.LogoutActionListener" />
+                                </p:commandButton>
+                            </h:form>
+                        </div>
+                        
+                        <h:form id="dateparam" >
+                            <h3>Report period</h3>  
+                            <p:calendar value="#{report.dateStart}" id="datestart" showOn="button" 
+                                        pattern="dd.MM.yyyy" required="true" requiredMessage="Start date required"
+                                        navigator="true"/> 
+                            <p:spacer width="10" />
+                            <p:calendar value="#{report.dateEnd}" id="dateend" showOn="button" 
+                                        pattern="dd.MM.yyyy" required="true" requiredMessage="End date required"
+                                        navigator="true"/>
+                            <p:spacer width="10" />
+                            <p:commandButton value="Create Report" action="#{report.createReportByCategory}" ajax="false" />
+                            <p:spacer width="10" />
+                            <p:commandButton value="Print" type="button" icon="ui-icon-print">  
+                                <p:printer target="categsales" />  
+                            </p:commandButton>
+                            <br />
+                            <p:spacer height="20" />
+
+                            <p:pieChart id="categsales" value="#{report.pieModel}" legendPosition="w" showDataLabels="true" 
+                                        title="Category sales" 
+                                        style="border:none !important;font-size: 18px;vertical-align: top !important;width:700px;height:400px" 
+                                        rendered="#{report.reportRendered}"/>
+
+                            <p:separator id="separator" rendered="#{report.reportRendered}"/>
+
+                            <p:spacer height="20" />
+
+                            <p:dataTable id="salesTable" var="sale" value="#{report.sales}" rendered="#{report.reportRendered}" >  
+
+                                <f:facet name="header">  
+                                    Sales/Profits Report  
+                                </f:facet>  
+
+                                <p:columnGroup type="header">  
+                                    <p:row>  
+                                        <p:column rowspan="2" headerText="Product" />  
+                                        <p:column rowspan="2" headerText="Category" /> 
+                                        <p:column colspan="2" headerText="Sales" />
+                                    </p:row>  
+
+                                    <p:row>  
+                                        <p:column headerText="Q-ty" />  
+                                        <p:column headerText="Amount" />  
+                                    </p:row>  
+
+                                </p:columnGroup>  
+
+                                <p:column>  
+                                    #{sale.menuPosition}  
+                                </p:column>  
+
+                                <p:column>  
+                                    #{sale.menuCategoryName}  
+                                </p:column>  
+
+                                <p:column style="text-align:right">  
+                                    #{sale.orderCount}  
+                                </p:column>  
+
+                                <p:column  style="text-align:right"> 
+                                    <h:outputText value="#{sale.orderSum}"> 
+                                        <f:convertNumber  pattern="$0.00"/>
+                                    </h:outputText>
+                                </p:column>  
+
+                                <p:columnGroup type="footer">  
+                                    <p:row>  
+                                        <p:column colspan="2" footerText="Totals:"  
+                                                  style="text-align:right;font-weight: bold"  />  
+
+                                        <p:column footerText="#{report.salesCount}" style="text-align:right;font-weight: bold" />  
+
+                                        <p:column footerText="$#{report.profit}" style="text-align:right;font-weight: bold"> 
+
+                                        </p:column>
+                                    </p:row>  
+                                </p:columnGroup>  
+
+                            </p:dataTable> 
+
+                        </h:form>
+
+                    </div>
+
+
+                </div>
+                <div id="middlecart">
+
+                </div>
+                <!-- #middle-->
+
+            </div><!-- #wrapper -->
+
+            <div id="footer">
+                <div id="footermenu">
+                    <ul>
+                        <ui:repeat value="#{mainMenu.mainmenu}" var="item">
+                            <li>
+                                <a href="#{item.href}"><h:outputText value="#{item.name}" class="mainmenu"/></a>
+                            </li>
+                        </ui:repeat>
+                    </ul>
+                </div>
+            </div><!-- #footer -->
+        </h:body>
+    </f:view>
+</html>
+

@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <link rel="stylesheet" type="text/css" href="mainstyle.css"/>
+            <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"/>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Food store</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <div id="wrapper">
+                <div id="header">
+                    <div id="topmenu">
+                        <ul>
+                            <ui:repeat value="#{mainMenu.mainmenu}" var="item">
+                                <li>
+                                    <a href="#{item.href}"><h:outputText value="#{item.name}" class="mainmenu"/></a>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </div>
+                </div><!-- #header-->
+
+                <div id="logolayer">
+
+                    <div id="logo">
+                        <p>
+                        <h:graphicImage alt="logo"
+                                        url="images/logo-img.png">
+                        </h:graphicImage>
+                        </p>
+                    </div>
+
+                    <div id="middletemplate">
+                        <h:form>  
+                            <p:dataTable var="item" value="#{ih.cart.items}">  
+                                <p:column headerText="Product">  
+                                    <h:outputText value="#{item.name}" />  
+                                </p:column>  
+
+                                <p:column headerText="Q-ty">  
+                                    <h:outputText value="#{item.quantity}" />  
+                                </p:column>  
+
+                                <p:column headerText="Price">  
+                                    <h:outputText value="#{item.price}" > 
+                                        <f:convertNumber  pattern="$0.00"/>
+                                    </h:outputText>
+                                </p:column>  
+
+                                <p:column headerText="Sum">  
+                                    <h:outputText value="#{item.sum}" > 
+                                        <f:convertNumber  pattern="$0.00"/>
+                                    </h:outputText>  
+                                </p:column>
+                                
+                                <p:columnGroup type="footer">  
+                                    <p:row>  
+                                        <p:column colspan="3" footerText="Totals:"  
+                                                  style="text-align:right;font-weight: bold"  />                                          
+
+                                        <p:column footerText="$#{ih.cart.total}" style="text-align:left;font-weight: bold"> 
+
+                                        </p:column>
+                                    </p:row> 
+                                    
+                                </p:columnGroup>
+                                
+                            </p:dataTable>  
+                        </h:form>
+                        
+                        <p:spacer height="20" />
+                        
+                        <h:form>
+                            <p:panel id="panel" header="Delivery info">  
+
+                                <p:messages id="msgs"/>  
+
+                                <h:panelGrid columns="3">  
+                                    <h:outputLabel for="fullname" value="Full name: *" />  
+                                    <p:inputText id="fullname" value="#{ih.cart.order.customerName}" required="true" label="Full name">  
+                                        <f:validateLength minimum="2" />  
+                                    </p:inputText>  
+                                    <p:message for="fullname" display="icon"/>  
+
+                                    <h:outputLabel for="email" value="E-mail *" />  
+                                    <p:inputText id="email" value="#{ih.cart.order.customerEmail}" label="e-mail" required="true" validatorMessage="Invalid email format">  
+                                        <f:validateLength minimum="2" />
+                                        <f:validateRegex
+                                            pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                        <p:ajax update="msgEmail" event="keyup" />  
+                                    </p:inputText>  
+                                    <p:message for="email" id="msgEmail" display="icon"/>  
+
+                                    <h:outputLabel for="adress" value="Address *" />  
+                                    <p:inputTextarea id="adress" value="#{ih.cart.order.customerAdress}" label="address" required="true" cols="100" rows="2">  
+                                        <f:validateLength minimum="2" />  
+                                        <p:ajax update="msgAddr" event="keyup" />  
+                                    </p:inputTextarea>  
+                                    <p:message for="adress" id="msgAddr" display="icon"/>
+                                    
+                                </h:panelGrid>  
+
+                                <p:commandButton id="btn" value="Save" update="panel" action="#{ih.cart.saveOrder}"/>
+                                
+                            </p:panel>
+                        </h:form>
+
+                    </div>
+
+
+                </div>
+                <!-- #middle-->
+
+            </div><!-- #wrapper -->
+
+            <div id="footer">
+                <div id="footermenu">
+                    <ul>
+                        <ui:repeat value="#{mainMenu.mainmenu}" var="item">
+                            <li>
+                                <a href="#{item.href}"><h:outputText value="#{item.name}" class="mainmenu"/></a>
+                            </li>
+                        </ui:repeat>
+                    </ul>
+                </div>
+            </div><!-- #footer -->
+        </h:body>
+    </f:view>
+</html>
+
